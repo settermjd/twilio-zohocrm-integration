@@ -1,0 +1,67 @@
+{
+    "name": "settermjd/sendgrid-in-php",
+    "description": "A small project that shows how to work with SendGrid in PHP.",
+    "minimum-stability": "stable",
+    "version": "0.1.0",
+    "license": "GPL-3.0-or-later",
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require": {
+        "asad/oauth2-zoho": "^1.1",
+        "guzzlehttp/guzzle": "^7.10",
+        "guzzlehttp/psr7": "^2.8",
+        "league/oauth2-client": "^2.8",
+        "mrbenosborne/json-unmarshal": "dev-fix-bug-unmarshalling-arrays",
+        "php-di/slim-bridge": "^3.4",
+        "slim/psr7": "^1.7",
+        "slim/slim": "^4.15",
+        "twilio/sdk": "^8.8",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.88.2",
+        "icanhazstring/composer-unused": "^0.9.5",
+        "laminas/laminas-coding-standard": "^3.1",
+        "phpstan/phpdoc-parser": "^2.3",
+        "phpstan/phpstan": "^2.1.30",
+        "phpstan/phpstan-phpunit": "^2.0.7",
+        "phpunit/phpunit": "^12.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Settermjd\\ZohoCRM\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Settermjd\\ZohoCRMTest\\": "test/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@static-analysis",
+            "@test"
+        ],
+        "cs-check": "php -d xdebug.mode=off vendor/bin/phpcs",
+        "cs-fix": "php -d xdebug.mode=off vendor/bin/phpcbf",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S 0.0.0.0:8080 -t public/"
+        ],
+        "static-analysis": "php -d xdebug.mode=off vendor/bin/phpstan analyse --memory-limit=256M -c phpstan.neon",
+        "test": "phpunit --colors=always",
+        "test-coverage-clover": "phpunit --colors=always --coverage-clover clover.xml",
+        "test-coverage-html": "phpunit --colors=always --coverage-html tests/output/"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:settermjd/json-unmarshal.git"
+        }
+    ]
+}
