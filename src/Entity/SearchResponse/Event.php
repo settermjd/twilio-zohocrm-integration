@@ -17,6 +17,9 @@ class Event
     #[JSON(field: 'Start_DateTime')]
     public string $startsAt;
 
+    #[JSON(field: 'Owner', type: EventOrganiser::class)]
+    public EventOrganiser $organiser;
+
     /**
      * @var list<EventParticipant>
      */
