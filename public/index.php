@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Asad\OAuth2\Client\Provider\Zoho;
 use DI\Container;
 use Dotenv\Dotenv;
-use Dotenv\Repository\RepositoryBuilder;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Settermjd\ZohoCRM\Application;
@@ -16,22 +15,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 const ZOHOCRM_URI = 'https://www.zohoapis.com.au/crm/v8/';
 const ZOHO_SCOPE = 'ZohoCRM.modules.contacts.READ,ZohoCRM.modules.events.READ';
-
-$repository = RepositoryBuilder::createWithDefaultAdapters()
-    ->allowList(
-        [
-            'MEETING_CREATOR',
-            'MEETING_VENUE',
-            'TWILIO_ACCOUNT_SID',
-            'TWILIO_AUTH_TOKEN',
-            'TWILIO_PHONE_NUMBER',
-            'ZOHO_CLIENT_ID',
-            'ZOHO_CLIENT_SECRET',
-            'ZOHO_SCOPE',
-            'ZOHO_SOID',
-        ]
-    )
-    ->make();
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
