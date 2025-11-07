@@ -14,6 +14,12 @@ class Event
     #[JSON(field: 'Event_Title')]
     public string $title;
 
+    #[JSON(field: 'Start_DateTime')]
+    public string $startsAt;
+
+    /**
+     * @var list<EventParticipant>
+     */
     #[JSON(field: 'Participants', type: EventParticipant::class)]
     public array $participants;
 }
