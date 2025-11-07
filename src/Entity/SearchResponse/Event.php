@@ -6,6 +6,11 @@ namespace Settermjd\ZohoCRM\Entity\SearchResponse;
 
 use JSON\Attributes\JSON;
 
+/**
+ * This class stores a small number of details of an event retrieved from Zoho CRM.
+ *
+ * @see https://www.zoho.com/developer/help/api/modules-fields.html#Events
+ */
 class Event
 {
     #[JSON(field: 'Venue')]
@@ -20,9 +25,7 @@ class Event
     #[JSON(field: 'Owner', type: EventOrganiser::class)]
     public EventOrganiser $organiser;
 
-    /**
-     * @var list<EventParticipant>
-     */
+    // @var list<EventParticipant>
     #[JSON(field: 'Participants', type: EventParticipant::class)]
     public array $participants;
 }

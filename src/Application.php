@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Settermjd\ZohoCRM;
 
 use DateTimeImmutable;
@@ -17,10 +16,19 @@ use Slim\Factory\AppFactory;
 use Twilio\Exceptions\RestException;
 use Twilio\Rest\Client as TwilioRestClient;
 
+use function json_encode;
+use function sprintf;
+
+/**
+ * This class encapsulates the central Slim application, making it easier to create and test.
+ */
 final class Application
 {
     private App $app;
 
+    /**
+     * @param array{'TWILIO_PHONE_NUMBER': string} $options
+     */
     public function __construct(
         private readonly ContainerInterface $container,
         private readonly array $options,
@@ -34,6 +42,9 @@ final class Application
         $this->app->get('/', [$this, 'handleDefaultRoute']);
     }
 
+    /**
+     * This function provides the dispatcher/handler for the default route.
+     */
     public function handleDefaultRoute(
         ServerRequestInterface $request,
         ResponseInterface $response
@@ -45,18 +56,19 @@ final class Application
 
         /** These two values need to be retrieved from the request */
         $eventCreator = $_ENV['MEETING_CREATOR'];
-        $eventVenue = $_ENV['MEETING_VENUE'];
+        $eventVenue   = $_ENV['MEETING_VENUE'];
 
-        $event = $zohoCrmService->getEventDetails($eventCreator, $eventVenue);
+        $event  = $zohoCrmService->getEventDetails($eventCreator, $eventVenue);
         $result = $this->notifyEventParticipants($event);
+
         $response->getBody()->write(json_encode($result));
 
         return $response;
     }
 
     /**
-     * notifyEventParticipants notifies all of the event participants via SMS
-     * 
+     * notifyEventParticipants notifies event participants of an upcoming meeting via SMS
+     *
      * @param list<EventParticipant> $participants
      */
     public function notifyEventParticipants(Event $event): array
@@ -89,6 +101,7 @@ final class Application
                         "from" => $this->options["TWILIO_PHONE_NUMBER"],
                     ]
                 );
+
                 $smsStatus[$participant->participant] = $message->status;
             } catch (RestException $e) {
                 $smsStatus[$participant->participant] = $e->getMessage();

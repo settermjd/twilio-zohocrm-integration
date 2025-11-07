@@ -15,25 +15,29 @@ use function json_decode;
 use function rawurlencode;
 use function sprintf;
 
+/**
+ * This class provides simplifies interacting with the Zoho CRM API
+ *
+ * In saying that, it doesn't do all that much, just simplifies what the
+ * app needs to retrieve from the Zoho CRM API, to avoid storing the
+ * information in public/index.php.
+ */
 final class ZohoCrmService
 {
     public const ZOHOCRM_URI = 'https://www.zohoapis.com.au/crm/v8/';
 
     /**
-     * @param array{
-     *      'ZOHO_SCOPE': string, 
-     *      'ZOHO_SOID': string, 
-     *      'TWILIO_PHONE_NUMBER': string
-     *  } $options
+     * @param array{'TWILIO_PHONE_NUMBER': string} $options
      */
     public function __construct(
         private readonly ClientInterface $httpClient,
         private readonly TwilioRestClient $twilioClient,
         private readonly array $options,
-    ) {}
+    ) {
+    }
 
     /**
-     * getEventDetails retrieves the event details from ZohoCRM
+     * getEventDetails retrieves the event details from Zoho CRM and marshalls them as an Event object
      */
     public function getEventDetails(string $creator, string $venue): Event
     {
@@ -66,7 +70,7 @@ final class ZohoCrmService
      * event participant's id
      *
      * It retrieves just the phone and mobile number for an event participant,
-     * as ZohoCRM's API doesn't return phone number information in the response
+     * as Zoho CRM's API doesn't return phone number information in the response
      * for retrieving event participant information
      */
     private function getContactFromEventParticipant(EventParticipant $participant): Contact

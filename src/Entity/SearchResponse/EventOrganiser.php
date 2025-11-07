@@ -6,6 +6,10 @@ namespace Settermjd\ZohoCRM\Entity\SearchResponse;
 
 use JSON\Attributes\JSON;
 
+/**
+ * This class stores a small number of details of an event's organiser.
+ * The information is retrieved from Zoho CRM.
+ */
 class EventOrganiser
 {
     #[JSON(field: 'id')]

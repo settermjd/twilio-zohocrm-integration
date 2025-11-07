@@ -14,8 +14,9 @@ use Twilio\Rest\Client as TwilioRestClient;
 require __DIR__ . '/../vendor/autoload.php';
 
 const ZOHOCRM_URI = 'https://www.zohoapis.com.au/crm/v8/';
-const ZOHO_SCOPE = 'ZohoCRM.modules.contacts.READ,ZohoCRM.modules.events.READ';
+const ZOHO_SCOPE  = 'ZohoCRM.modules.contacts.READ,ZohoCRM.modules.events.READ';
 
+// Load the required environment variables that the app needs
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $dotenv->required([
@@ -30,6 +31,7 @@ $dotenv->required([
     'ZOHO_SOID',
 ])->notEmpty();
 
+// Set up the objects for the DI container's services
 $provider = new Zoho([
     'clientId'     => $_ENV['ZOHO_CLIENT_ID'],
     'clientSecret' => $_ENV['ZOHO_CLIENT_SECRET'],
@@ -65,11 +67,12 @@ $twilioRestClient = new TwilioRestClient(
     $_ENV["TWILIO_AUTH_TOKEN"]
 );
 
+// Set up the DI container, initialising all of the required services
 $container = new Container();
-$container->set(Zoho::class, fn() => $provider);
-$container->set(Client::class, fn() => $client);
-$container->set(TwilioRestClient::class, fn() => $twilioRestClient);
-$container->set(ZohoCrmService::class, fn() => new ZohoCrmService($client, $twilioRestClient, []));
+$container->set(Zoho::class, fn () => $provider);
+$container->set(Client::class, fn () => $client);
+$container->set(TwilioRestClient::class, fn () => $twilioRestClient);
+$container->set(ZohoCrmService::class, fn () => new ZohoCrmService($client, $twilioRestClient, []));
 
 $application = new Application(
     $container,
