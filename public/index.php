@@ -7,6 +7,10 @@ use DI\Container;
 use Dotenv\Dotenv;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Settermjd\ZohoCRM\Application;
 use Settermjd\ZohoCRM\Service\ZohoCrmService;
 use Twilio\Rest\Client as TwilioRestClient;
@@ -39,7 +43,18 @@ $provider = new Zoho([
     'dc'           => 'AU',
 ]);
 
+$logger = (new Logger('name'))->pushHandler(
+    new StreamHandler(
+        __DIR__ . "/../app.log",
+        Level::Debug
+    )
+);
+
 try {
+    $logger->debug("Attempting to retrieve access token.", [
+        'scope' => $_ENV['ZOHO_SCOPE'],
+        'soid'  => 'ZohoCRM.' . $_ENV['ZOHO_SOID'],
+    ]);
     $accessToken = $provider->getAccessToken(
         'client_credentials',
         [
@@ -69,6 +84,9 @@ $twilioRestClient = new TwilioRestClient(
 
 // Set up the DI container, initialising all of the required services
 $container = new Container();
+$container->set(LoggerInterface::class, function () use ($logger) {
+    return $logger;
+});
 $container->set(Zoho::class, fn () => $provider);
 $container->set(Client::class, fn () => $client);
 $container->set(TwilioRestClient::class, fn () => $twilioRestClient);
