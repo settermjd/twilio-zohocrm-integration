@@ -63,7 +63,7 @@ try {
         ]
     );
 } catch (IdentityProviderException $e) {
-    exit($e->getMessage());
+    exit("Could not retrieve access token. Reason: " . $e->getMessage());
 }
 
 $client = new Client(
