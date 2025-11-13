@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Settermjd\ZohoCRM\Entity\SearchResponse\Event;
 use Settermjd\ZohoCRM\Service\ZohoCrmService;
 use Slim\App;
@@ -53,6 +54,9 @@ final class Application
             ->getContainer()
             ->get(ZohoCrmService::class);
 
+        /** @var LoggerInterface $logger */
+        $logger = $this->container->get(LoggerInterface::class);
+        $logger->debug('Webhook request data', (array) $request->getParsedBody());
 
         $meetingCreator = $request->getParsedBody()['Meeting_Creator'];
         $meetingVenue   = $request->getParsedBody()['Meeting_Location'];
