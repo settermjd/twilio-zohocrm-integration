@@ -38,7 +38,7 @@ final class Application
 
     public function setupRoutes(): void
     {
-        $this->app->get('/', [$this, 'handleDefaultRoute']);
+        $this->app->post('/', [$this, 'handleDefaultRoute']);
     }
 
     /**
