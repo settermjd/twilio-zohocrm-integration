@@ -24,8 +24,6 @@ const ZOHO_SCOPE  = 'ZohoCRM.modules.contacts.READ,ZohoCRM.modules.events.READ';
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $dotenv->required([
-    'MEETING_CREATOR',
-    'MEETING_VENUE',
     'TWILIO_ACCOUNT_SID',
     'TWILIO_AUTH_TOKEN',
     'TWILIO_PHONE_NUMBER',

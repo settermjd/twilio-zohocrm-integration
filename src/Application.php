@@ -9,7 +9,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Settermjd\ZohoCRM\Entity\SearchResponse\Event;
-use Settermjd\ZohoCRM\Entity\SearchResponse\EventParticipant;
 use Settermjd\ZohoCRM\Service\ZohoCrmService;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -54,12 +53,12 @@ final class Application
             ->getContainer()
             ->get(ZohoCrmService::class);
 
-        /** These two values need to be retrieved from the request */
-        $eventCreator = $_ENV['MEETING_CREATOR'];
-        $eventVenue   = $_ENV['MEETING_VENUE'];
 
-        $event  = $zohoCrmService->getEventDetails($eventCreator, $eventVenue);
-        $result = $this->notifyEventParticipants($event);
+        $meetingCreator = $request->getParsedBody()['Meeting_Creator'];
+        $meetingVenue   = $request->getParsedBody()['Meeting_Location'];
+
+        $meeting = $zohoCrmService->getEventDetails($meetingCreator, $meetingVenue);
+        $result  = $this->notifyMeetingParticipants($meeting);
 
         $response->getBody()->write(json_encode($result));
 
@@ -67,11 +66,11 @@ final class Application
     }
 
     /**
-     * notifyEventParticipants notifies event participants of an upcoming meeting via SMS
+     * notifyMeetingParticipants notifies meeting participants about the upcoming meeting via SMS
      *
      * @param list<EventParticipant> $participants
      */
-    public function notifyEventParticipants(Event $event): array
+    public function notifyMeetingParticipants(Event $event): array
     {
         $smsStatus = [];
 
