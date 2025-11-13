@@ -68,7 +68,7 @@ final class Application
     /**
      * notifyMeetingParticipants notifies meeting participants about the upcoming meeting via SMS
      *
-     * @param list<EventParticipant> $participants
+     * @return array<string,string>
      */
     public function notifyMeetingParticipants(Event $event): array
     {
