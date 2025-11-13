@@ -93,7 +93,7 @@ final class Application
                             $msgBody,
                             $event->title,
                             $event->venue,
-                            (new DateTimeImmutable($event->startsAt))->format("D, M jS, Y"),
+                            (new DateTimeImmutable($event->startsAt))->format("r"),
                             $event->organiser->name,
                             $event->organiser->email
                         ),
