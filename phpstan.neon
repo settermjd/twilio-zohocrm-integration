@@ -6,3 +6,10 @@ parameters:
 	fileExtensions:
 		- php
 	reportUnmatchedIgnoredErrors: true
+	ignoreErrors:
+		-
+			identifier: method.unused
+			path: src/Application.php
+		-
+			identifier: missingType.generics
+			path: src/Application.php
