@@ -49,17 +49,17 @@ final class Application
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        /** @var ZohoCrmService $zohoCrmService */
-        $zohoCrmService = $this->app
-            ->getContainer()
-            ->get(ZohoCrmService::class);
-
         /** @var LoggerInterface $logger */
         $logger = $this->container->get(LoggerInterface::class);
         $logger->debug('Webhook request data', (array) $request->getParsedBody());
 
         $meetingCreator = $request->getParsedBody()['Meeting_Creator'];
         $meetingVenue   = $request->getParsedBody()['Meeting_Location'];
+
+        /** @var ZohoCrmService $zohoCrmService */
+        $zohoCrmService = $this->app
+            ->getContainer()
+            ->get(ZohoCrmService::class);
 
         $meeting = $zohoCrmService->getEventDetails($meetingCreator, $meetingVenue);
         $result  = $this->notifyMeetingParticipants($meeting);
@@ -82,7 +82,7 @@ final class Application
             $msgBody = <<<EOF
             You've been requested to attend a meeting (%s) at %s, starting at %s. 
 
-            The event organiser is %s. 
+            The meeting organiser is %s. 
             Email them at %s for more information.
             EOF;
 
