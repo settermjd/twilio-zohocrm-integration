@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Application;
+use App\Service\ZohoCrmService;
 use Asad\OAuth2\Client\Provider\Zoho;
 use DI\Container;
 use Dotenv\Dotenv;

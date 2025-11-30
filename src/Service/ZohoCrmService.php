@@ -8,6 +8,7 @@ use App\Entity\LoggedCall;
 use App\Entity\SearchResponse\Contact;
 use App\Entity\SearchResponse\Event;
 use App\Entity\SearchResponse\EventParticipant;
+use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
 use JSON\Unmarshal;
 use Twilio\Rest\Client as TwilioRestClient;
@@ -33,6 +34,44 @@ final class ZohoCrmService
         private readonly TwilioRestClient $twilioClient,
         private readonly array $options,
     ) {
+    }
+
+
+    /**
+     * recordVoiceCall records a voice call in Zoho CRM
+     *
+     * It stores the text transcription of the call along with the recording.
+     */
+    public function recordVoiceCall(LoggedCall $callDetails): bool
+    {
+        $requestData = [
+            'data' => [
+                [
+                    'Call_Agenda'              => $callDetails->callAgenda,
+                    'Call_Duration'            => $callDetails->callDuration->format("i"),
+                    'Call_Duration_in_seconds' => $callDetails->callDuration->format("s"),
+                    'Call_Purpose'             => $callDetails->callPurpose->value,
+                    'Call_Result'              => $callDetails->callResult->value,
+                    'Call_Start_Time'          => $callDetails->callStarted->format(DateTimeInterface::ATOM),
+                    'Call_Type'                => $callDetails->callType->value,
+                    'Description'              => $callDetails->description,
+                    'Outgoing_Call_Status'     => $callDetails->outgoingCallStatus->value,
+                    'Subject'                  => $callDetails->subject,
+                    'Voice_Recording__s'       => $callDetails->voiceRecording,
+                ],
+            ],
+        ];
+
+        $body     = $this->httpClient->request(
+            'POST',
+            'Calls',
+            [
+                'json' => $requestData,
+            ]
+        )->getBody();
+        $jsonData = json_decode($body->getContents(), true);
+
+        return true;
     }
 
     /**
