@@ -24,8 +24,6 @@ use function sprintf;
  */
 final class ZohoCrmService
 {
-    public const ZOHOCRM_URI = 'https://www.zohoapis.com.au/crm/v8/';
-
     /**
      * @param array{'TWILIO_PHONE_NUMBER': string} $options
      */

@@ -11,22 +11,22 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Settermjd\ZohoCRM\Application;
-use Settermjd\ZohoCRM\Service\ZohoCrmService;
 use Twilio\Rest\Client as TwilioRestClient;
 
-require __DIR__ . '/../vendor/autoload.php';
+use function sprintf;
 
-const ZOHOCRM_URI = 'https://www.zohoapis.com.au/crm/v8/';
-const ZOHO_SCOPE  = 'ZohoCRM.modules.contacts.READ,ZohoCRM.modules.events.READ';
+require __DIR__ . '/../vendor/autoload.php';
 
 // Load the required environment variables that the app needs
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $dotenv->required([
+    'PUBLIC_URL',
     'TWILIO_ACCOUNT_SID',
     'TWILIO_AUTH_TOKEN',
     'TWILIO_PHONE_NUMBER',
+    'ZOHOCRM_DC',
+    'ZOHOCRM_URI',
     'ZOHO_CLIENT_ID',
     'ZOHO_CLIENT_SECRET',
     'ZOHO_SCOPE',
@@ -38,7 +38,7 @@ $provider = new Zoho([
     'clientId'     => $_ENV['ZOHO_CLIENT_ID'],
     'clientSecret' => $_ENV['ZOHO_CLIENT_SECRET'],
     'redirectUri'  => '',
-    'dc'           => 'AU',
+    'dc'           => $_ENV['ZOHOCRM_DC'],
 ]);
 
 $logger = (new Logger('name'))->pushHandler(
@@ -66,7 +66,7 @@ try {
 
 $client = new Client(
     [
-        'base_uri' => ZOHOCRM_URI,
+        'base_uri' => $_ENV['ZOHOCRM_URI'],
         'debug'    => false,
         'headers'  => [
             "Authorization" => sprintf("Zoho-oauthtoken %s", $accessToken),
@@ -94,6 +94,7 @@ $application = new Application(
     $container,
     [
         "TWILIO_PHONE_NUMBER" => $_ENV["TWILIO_PHONE_NUMBER"],
+        "PUBLIC_URL"          => $_ENV["PUBLIC_URL"],
     ]
 );
 
