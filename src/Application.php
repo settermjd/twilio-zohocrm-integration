@@ -27,7 +27,7 @@ final class Application
     private App $app;
 
     /**
-     * @param array{'TWILIO_PHONE_NUMBER': string} $options
+     * @param array{ 'TWILIO_PHONE_NUMBER':string, 'PUBLIC_URL':string } $options
      */
     public function __construct(
         private readonly ContainerInterface $container,
