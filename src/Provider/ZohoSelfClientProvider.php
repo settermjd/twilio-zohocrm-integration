@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\ZohoCRM\Provider;
+namespace App\Provider;
 
 use Asad\OAuth2\Client\Provider\Zoho;
 

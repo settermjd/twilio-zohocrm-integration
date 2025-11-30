@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\ZohoCRM\Service;
+namespace App\Service;
 
+use App\Entity\LoggedCall;
+use App\Entity\SearchResponse\Contact;
+use App\Entity\SearchResponse\Event;
+use App\Entity\SearchResponse\EventParticipant;
 use GuzzleHttp\ClientInterface;
 use JSON\Unmarshal;
-use Settermjd\ZohoCRM\Entity\SearchResponse\Contact;
-use Settermjd\ZohoCRM\Entity\SearchResponse\Event;
-use Settermjd\ZohoCRM\Entity\SearchResponse\EventParticipant;
 use Twilio\Rest\Client as TwilioRestClient;
 
 use function json_decode;

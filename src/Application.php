@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\ZohoCRM;
+namespace App;
 
+use App\Entity\CallPurpose;
+use App\Entity\CallResult;
+use App\Entity\CallType;
+use App\Entity\LoggedCall;
+use App\Entity\OutgoingCallStatus;
+use App\Entity\SearchResponse\Event;
+use App\Service\ZohoCrmService;
 use DateTimeImmutable;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use Settermjd\ZohoCRM\Entity\SearchResponse\Event;
-use Settermjd\ZohoCRM\Service\ZohoCrmService;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Twilio\Exceptions\RestException;
