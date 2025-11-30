@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\ZohoCRM\Entity\SearchResponse;
+namespace App\Entity\SearchResponse;
 
 use JSON\Attributes\JSON;
 

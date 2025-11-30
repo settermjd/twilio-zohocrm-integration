@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Settermjd\\ZohoCRM\\": "src/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
