@@ -164,11 +164,43 @@ final class Application
         $logger->debug('Call Data', [$callData]);
         $result = $zohoCrmService->recordVoiceCall($callData);
 
-        $result
-            ? $response->getBody()->write("Call logged.")
-            : $response->getBody()->write("Call not logged.");
+        $response->getBody()->write($result->getBody()->getContents());
 
-        return $result;
+        return $response;
+    }
+
+    public function testCallLogging(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+    ): ResponseInterface {
+        /** @var ZohoCrmService $zohoCrmService */
+        $zohoCrmService = $this->app
+            ->getContainer()
+            ->get(ZohoCrmService::class);
+
+        $callData                     = new LoggedCall();
+        $callData->callType           = CallType::OUTBOUND;
+        $callData->outgoingCallStatus = OutgoingCallStatus::COMPLETED;
+        $callData->callStarted        = new DateTime()->sub(new DateInterval('P4DT2H3M'));
+
+        [$minutes, $seconds]    = explode(':', gmdate('i:s', 85));
+        $callData->callDuration = new DateInterval(sprintf(self::DATE_FORMAT, $minutes, $seconds));
+
+        $callData->subject        = sprintf(
+            "Inbound Call From Twilio (%s)",
+            $callData->callDuration->format(DateTimeImmutable::ATOM)
+        );
+        $callData->voiceRecording = 'https://example.invalid/recording/s612Gedf43958';
+
+        $callData->callPurpose = CallPurpose::PROSPECTING;
+        $callData->callAgenda  = "This is the call agenda";
+        $callData->callResult  = CallResult::REQUESTED_MORE_INFO;
+        $callData->description = 'This is the description';
+
+        $result = $zohoCrmService->recordVoiceCall($callData);
+        $response->getBody()->write($result->getBody()->getContents());
+
+        return $response->withHeader("Content-Type", "application/json");
     }
 
     /**
