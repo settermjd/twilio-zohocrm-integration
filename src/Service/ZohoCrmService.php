@@ -11,9 +11,11 @@ use App\Entity\SearchResponse\EventParticipant;
 use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
 use JSON\Unmarshal;
+use Psr\Http\Message\ResponseInterface;
 use Twilio\Rest\Client as TwilioRestClient;
 
 use function json_decode;
+use function json_encode;
 use function rawurlencode;
 use function sprintf;
 
@@ -36,20 +38,34 @@ final class ZohoCrmService
     ) {
     }
 
+    public function getFieldMetadata(string $module): string
+    {
+        $response = $this->httpClient->request(
+            'GET',
+            'settings/fields',
+            [
+                'query' => [
+                    'module' => $module,
+                ],
+            ]
+        );
+
+        return $response->getBody()->getContents();
+    }
 
     /**
      * recordVoiceCall records a voice call in Zoho CRM
      *
      * It stores the text transcription of the call along with the recording.
      */
-    public function recordVoiceCall(LoggedCall $callDetails): bool
+    public function recordVoiceCall(LoggedCall $callDetails): ResponseInterface
     {
         $requestData = [
             'data' => [
                 [
                     'Call_Agenda'              => $callDetails->callAgenda,
-                    'Call_Duration'            => $callDetails->callDuration->format("i"),
-                    'Call_Duration_in_seconds' => $callDetails->callDuration->format("s"),
+                    'Call_Duration'            => $callDetails->callDuration->format("%I:%s"),
+                    'Call_Duration_in_seconds' => "s",
                     'Call_Purpose'             => $callDetails->callPurpose->value,
                     'Call_Result'              => $callDetails->callResult->value,
                     'Call_Start_Time'          => $callDetails->callStarted->format(DateTimeInterface::ATOM),
@@ -62,16 +78,13 @@ final class ZohoCrmService
             ],
         ];
 
-        $body     = $this->httpClient->request(
+        return $this->httpClient->request(
             'POST',
             'Calls',
             [
-                'json' => $requestData,
+                'body' => json_encode($requestData),
             ]
-        )->getBody();
-        $jsonData = json_decode($body->getContents(), true);
-
-        return true;
+        );
     }
 
     /**

@@ -15,8 +15,6 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Twilio\Rest\Client as TwilioRestClient;
 
-use function sprintf;
-
 require __DIR__ . '/../vendor/autoload.php';
 
 // Load the required environment variables that the app needs
