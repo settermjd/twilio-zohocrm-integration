@@ -8,7 +8,6 @@ use App\Entity\CallPurpose;
 use App\Entity\CallResult;
 use App\Entity\CallType;
 use App\Entity\LoggedCall;
-use App\Entity\OutgoingCallStatus;
 use App\Entity\SearchResponse\Event;
 use App\Service\ZohoCrmService;
 use DateInterval;
@@ -133,7 +132,6 @@ final class Application
 
         $callData                     = new LoggedCall();
         $callData->callType           = CallType::INBOUND;
-        $callData->outgoingCallStatus = OutgoingCallStatus::COMPLETED;
         $callData->callStarted        = $call->startTime;
 
         // Instantiate a DateInterval instance based on the call's integer duration
@@ -142,17 +140,17 @@ final class Application
 
         $callData->subject        = sprintf(
             "Inbound Call From Twilio (%s)",
-            $callData->callDuration->format(DateTimeImmutable::ATOM)
+            $callData->callStarted->format(DateTimeImmutable::ATOM)
         );
         $callData->voiceRecording = $formData['RecordingUrl'];
 
-        // Purpose of the outgoing call
+        // Purpose of the call
         $callData->callPurpose = CallPurpose::PROSPECTING;
 
         // Not going to fill this in, yet.
         $callData->callAgenda = "";
 
-        // Outcome of the outgoing call
+        // Outcome of the call
         $callData->callResult  = CallResult::REQUESTED_MORE_INFO;
         $callData->description = $formData['TranscriptionText'];
 
@@ -179,8 +177,7 @@ final class Application
             ->get(ZohoCrmService::class);
 
         $callData                     = new LoggedCall();
-        $callData->callType           = CallType::OUTBOUND;
-        $callData->outgoingCallStatus = OutgoingCallStatus::COMPLETED;
+        $callData->callType           = CallType::INBOUND;
         $callData->callStarted        = new DateTime()->sub(new DateInterval('P4DT2H3M'));
 
         [$minutes, $seconds]    = explode(':', gmdate('i:s', 85));
