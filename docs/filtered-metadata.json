@@ -1,0 +1,538 @@
+{
+  "API Name": "Owner",
+  "Field Label": "Call Owner",
+  "Type": "used",
+  "Data Type": "ownerlookup",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Subject",
+  "Field Label": "Subject",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 255,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Type",
+  "Field Label": "Call Type",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "Outbound",
+      "sequence_number": 1,
+      "reference_value": "Outbound",
+      "colour_code": null,
+      "actual_value": "Outbound",
+      "id": "106196000000004345",
+      "type": "used"
+    },
+    {
+      "display_value": "Inbound",
+      "sequence_number": 2,
+      "reference_value": "Inbound",
+      "colour_code": null,
+      "actual_value": "Inbound",
+      "id": "106196000000004348",
+      "type": "used"
+    },
+    {
+      "display_value": "Missed",
+      "sequence_number": 3,
+      "reference_value": "Missed",
+      "colour_code": null,
+      "actual_value": "Missed",
+      "id": "106196000000004351",
+      "type": "used"
+    }
+  ]
+}
+{
+  "API Name": "Call_Purpose",
+  "Field Label": "Call Purpose",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "-None-",
+      "sequence_number": 1,
+      "reference_value": "-None-",
+      "colour_code": null,
+      "actual_value": "-None-",
+      "id": "106196000000004356",
+      "type": "used"
+    },
+    {
+      "display_value": "Prospecting",
+      "sequence_number": 2,
+      "reference_value": "Prospecting",
+      "colour_code": null,
+      "actual_value": "Prospecting",
+      "id": "106196000000004359",
+      "type": "used"
+    },
+    {
+      "display_value": "Administrative",
+      "sequence_number": 3,
+      "reference_value": "Administrative",
+      "colour_code": null,
+      "actual_value": "Administrative",
+      "id": "106196000000004362",
+      "type": "used"
+    },
+    {
+      "display_value": "Negotiation",
+      "sequence_number": 4,
+      "reference_value": "Negotiation",
+      "colour_code": null,
+      "actual_value": "Negotiation",
+      "id": "106196000000004365",
+      "type": "used"
+    },
+    {
+      "display_value": "Demo",
+      "sequence_number": 5,
+      "reference_value": "Demo",
+      "colour_code": null,
+      "actual_value": "Demo",
+      "id": "106196000000004368",
+      "type": "used"
+    },
+    {
+      "display_value": "Project",
+      "sequence_number": 6,
+      "reference_value": "Project",
+      "colour_code": null,
+      "actual_value": "Project",
+      "id": "106196000000004371",
+      "type": "used"
+    },
+    {
+      "display_value": "Desk",
+      "sequence_number": 7,
+      "reference_value": "Desk",
+      "colour_code": null,
+      "actual_value": "Support",
+      "id": "106196000000004374",
+      "type": "used"
+    }
+  ]
+}
+{
+  "API Name": "Who_Id",
+  "Field Label": "Contact Name",
+  "Type": "used",
+  "Data Type": "lookup",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "What_Id",
+  "Field Label": "Related To",
+  "Type": "used",
+  "Data Type": "lookup",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Start_Time",
+  "Field Label": "Call Start Time",
+  "Type": "used",
+  "Data Type": "datetime",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Duration",
+  "Field Label": "Call Duration",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 50,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Duration_in_seconds",
+  "Field Label": "Call Duration (in seconds)",
+  "Type": "used",
+  "Data Type": "integer",
+  "Length": 50,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Description",
+  "Field Label": "Description",
+  "Type": "used",
+  "Data Type": "textarea",
+  "Length": 32000,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Result",
+  "Field Label": "Call Result",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "-None-",
+      "sequence_number": 1,
+      "reference_value": "-None-",
+      "colour_code": null,
+      "actual_value": "-None-",
+      "id": "106196000000004391",
+      "type": "used"
+    },
+    {
+      "display_value": "Interested",
+      "sequence_number": 2,
+      "reference_value": "Interested",
+      "colour_code": null,
+      "actual_value": "Interested",
+      "id": "106196000000004394",
+      "type": "used"
+    },
+    {
+      "display_value": "Not interested",
+      "sequence_number": 3,
+      "reference_value": "Not interested",
+      "colour_code": null,
+      "actual_value": "Not interested",
+      "id": "106196000000004397",
+      "type": "used"
+    },
+    {
+      "display_value": "No response/Busy",
+      "sequence_number": 4,
+      "reference_value": "No response/Busy",
+      "colour_code": null,
+      "actual_value": "No response/Busy",
+      "id": "106196000000004400",
+      "type": "used"
+    },
+    {
+      "display_value": "Requested more info",
+      "sequence_number": 5,
+      "reference_value": "Requested more info",
+      "colour_code": null,
+      "actual_value": "Requested more info",
+      "id": "106196000000004403",
+      "type": "used"
+    },
+    {
+      "display_value": "Requested call back",
+      "sequence_number": 6,
+      "reference_value": "Requested call back",
+      "colour_code": null,
+      "actual_value": "Requested call back",
+      "id": "106196000000004406",
+      "type": "used"
+    },
+    {
+      "display_value": "Invalid number",
+      "sequence_number": 7,
+      "reference_value": "Invalid number",
+      "colour_code": null,
+      "actual_value": "Invalid number",
+      "id": "106196000000004409",
+      "type": "used"
+    }
+  ]
+}
+{
+  "API Name": "CTI_Entry",
+  "Field Label": "CTI Entry",
+  "Type": "used",
+  "Data Type": "boolean",
+  "Length": 5,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Created_By",
+  "Field Label": "Created By",
+  "Type": "used",
+  "Data Type": "ownerlookup",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Modified_By",
+  "Field Label": "Modified By",
+  "Type": "used",
+  "Data Type": "ownerlookup",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Created_Time",
+  "Field Label": "Created Time",
+  "Type": "used",
+  "Data Type": "datetime",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Modified_Time",
+  "Field Label": "Modified Time",
+  "Type": "used",
+  "Data Type": "datetime",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Reminder",
+  "Field Label": "Reminder",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 100,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "None",
+      "maps": [],
+      "actual_value": "none"
+    },
+    {
+      "display_value": "5 minutes before",
+      "maps": [],
+      "actual_value": "5 mins"
+    },
+    {
+      "display_value": "10 minutes before",
+      "maps": [],
+      "actual_value": "10 mins"
+    },
+    {
+      "display_value": "15 minutes before",
+      "maps": [],
+      "actual_value": "15 mins"
+    },
+    {
+      "display_value": "30 minutes before",
+      "maps": [],
+      "actual_value": "30 mins"
+    },
+    {
+      "display_value": "1 hour before",
+      "maps": [],
+      "actual_value": "1 hrs"
+    },
+    {
+      "display_value": "2 hours before",
+      "maps": [],
+      "actual_value": "2 hrs"
+    },
+    {
+      "display_value": "1 day before",
+      "maps": [],
+      "actual_value": "1 days"
+    },
+    {
+      "display_value": "2 days before",
+      "maps": [],
+      "actual_value": "2 days"
+    }
+  ]
+}
+{
+  "API Name": "Outgoing_Call_Status",
+  "Field Label": "Outgoing Call Status",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "-None-",
+      "sequence_number": 1,
+      "reference_value": "-None-",
+      "colour_code": null,
+      "actual_value": "-None-",
+      "id": "106196000000004443",
+      "type": "used"
+    },
+    {
+      "display_value": "Scheduled",
+      "sequence_number": 2,
+      "reference_value": "Scheduled",
+      "colour_code": null,
+      "actual_value": "Scheduled",
+      "id": "106196000000004428",
+      "type": "used"
+    },
+    {
+      "display_value": "Completed",
+      "sequence_number": 3,
+      "reference_value": "Completed",
+      "colour_code": null,
+      "actual_value": "Completed",
+      "id": "106196000000004431",
+      "type": "used"
+    },
+    {
+      "display_value": "Overdue",
+      "sequence_number": 4,
+      "reference_value": "Overdue",
+      "colour_code": null,
+      "actual_value": "Overdue",
+      "id": "106196000000004437",
+      "type": "used"
+    },
+    {
+      "display_value": "Cancelled",
+      "sequence_number": 5,
+      "reference_value": "Cancelled",
+      "colour_code": null,
+      "actual_value": "Cancelled",
+      "id": "106196000000004440",
+      "type": "used"
+    }
+  ]
+}
+{
+  "API Name": "Tag",
+  "Field Label": "Tag",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 2000,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Scheduled_In_CRM",
+  "Field Label": "Scheduled in CRM",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "False",
+      "sequence_number": 1,
+      "reference_value": "False",
+      "colour_code": null,
+      "actual_value": "False",
+      "id": "106196000000085003",
+      "type": "used"
+    },
+    {
+      "display_value": "True",
+      "sequence_number": 2,
+      "reference_value": "True",
+      "colour_code": null,
+      "actual_value": "True",
+      "id": "106196000000085005",
+      "type": "used"
+    }
+  ]
+}
+{
+  "API Name": "id",
+  "Field Label": "Record Id",
+  "Type": "used",
+  "Data Type": "bigint",
+  "Length": 18,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Last_Activity_Time",
+  "Field Label": "Last Activity Time",
+  "Type": "used",
+  "Data Type": "datetime",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Call_Agenda",
+  "Field Label": "Call Agenda",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 255,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Caller_ID",
+  "Field Label": "Caller ID",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 30,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Dialled_Number",
+  "Field Label": "Dialled Number",
+  "Type": "used",
+  "Data Type": "text",
+  "Length": 30,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Voice_Recording__s",
+  "Field Label": "Voice Recording",
+  "Type": "used",
+  "Data Type": "website",
+  "Length": 1000,
+  "Virtual Field": false,
+  "Supported Options": []
+}
+{
+  "API Name": "Record_Status__s",
+  "Field Label": "Record Status",
+  "Type": "used",
+  "Data Type": "picklist",
+  "Length": 120,
+  "Virtual Field": false,
+  "Supported Options": [
+    {
+      "display_value": "Trash",
+      "sequence_number": 1,
+      "reference_value": "Trash",
+      "colour_code": null,
+      "actual_value": "Trash",
+      "id": "106196000000409332",
+      "type": "used"
+    },
+    {
+      "display_value": "Available",
+      "sequence_number": 2,
+      "reference_value": "Available",
+      "colour_code": null,
+      "actual_value": "Available",
+      "id": "106196000000409333",
+      "type": "used"
+    },
+    {
+      "display_value": "Draft",
+      "sequence_number": 3,
+      "reference_value": "Draft",
+      "colour_code": null,
+      "actual_value": "Draft",
+      "id": "106196000000409334",
+      "type": "used"
+    }
+  ]
+}

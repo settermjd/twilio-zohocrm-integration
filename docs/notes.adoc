@@ -1,0 +1,234 @@
+= Notes
+
+== Set Up Steps
+
+=== Generate an API Key and Secret
+
+* Settings -> Developer Hub -> APIs and SDKs -> SDKs -> "Server Side SDKs" 
+* Click "Register New Client"
+* Enter your password to verify your identity
+* Click "Get Started"
+* Under "Choose a Client Type" click "CREATE NOW" in the "Self Client" option/section
+* In "Create New Client" click "CREATE"
+* Then, click "OK" to "Are you sure to enable self-client?" in the confirmation popup
+* Copy the **Client ID** and **Client Secret** that are now visible
+* Set them as the values of `ZOHO_CLIENT_ID` and `ZOHO_CLIENT_SECRET`, respectively, in _env_
+
+=== Retrieve your Zoho SOID
+
+* Click the profile icon in the left-hand side navigation bar, underneath the Settings icon
+* Copy the **User Id** or _unique identification number_ in Zoho
+* Set it as the value of `ZOHO_SOID` in _.env_
+
+=== Create a Webhook
+
+* Go to Setup > Automation > Actions > Webhooks
+* In the Webhooks page, click Configure Webhook
+* In the New Webhook page set the Name, and URL to Notify to the app's publicly accessible (Forwarding) URL from ngrok
+* Set *Module* to "Meetings"
+* Under Body set Type to Form-Data and add three Module Parameters:
+** Parameter Name: Meeting Title. Parameter Value: Title
+** Parameter Name: Meeting Location. Parameter Value: Location
+** Parameter Name: Meeting Creator. Parameter Value: Created By
+* Click Save.
+
+=== Associate a Webhook with a Workflow Rule
+
+* Go to Setup > Automation > Workflow Rules
+* In the Workflow Rules page, click the Create Rule.
+* In the Create New Rule page, specify workflow rule parameters.
+** Set *Module* to "Meetings" and *Rule Name* to "Meeting Notifications"
+* Click Next
+** In Meeting Notifications, set "Execute this workflow rule based on" to "Record action", and enable "Repeat this workflow whenever a meeting is edited" and change "Create" to "Create or Edit", then click *Next*
+* For "Condition 1", check "All Meetings" and click *Done*
+* Set "Instant Actions" to "Webhook"
+* Then, from the list of webhooks that appears, select the webhook that you created earlier and click "Associate"
+* Finally, click "Save"
+
+=== Create a Meeting
+
+To create a meeting:
+
+* In the left-hand side navigation bar, click Modules > Activities > Meetings
+* Click *Create Meeting*
+* Fill out the meeting details form, setting the *Title* to "Let's Talk about Turtle Conservation" and the *Location* to "Mon Repos Turtle Centre" and click *Save*
+* Scroll down and next to Participants, click "+ Add"
+* Add at least one of the available participants who have a valid mobile phone number set
+* Click *Save*
+
+NOTE: After creating the meeting, if you check the ngrok terminal session, you'll see that a POST request was received
+
+Now, in _.env_, set the value of `MEETING_VENUE` to "Mon Repos Turtle Centre".
+
+== Curl Requests
+
+[source,bash]
+----
+# Retrieve an access and refresh token
+curl --data "client_id=<YOUR CLIENT ID>" \
+  --data "client_secret=<YOUR CLIENT SECRET>" \
+  --data "redirect_uri=''" \
+  --data "grant_type=authorization_code" \
+  --data "code=<YOUR CLIENT CODE>" \
+  https://accounts.zoho.com.au/oauth/v2/token
+
+# Search records
+curl "https://www.zohoapis.com/crm/v8/Leads/search?criteria=Created_Time%3Abetween%3A2024-02-01T18%3A5
+2%3A56%2B00%3A00%2C2024-02-20T18%3A52%3A56%2B00%3A00" \
+  -X GET \
+  -H "Authorization: Zoho-oauthtoken <YOUR OAUTH TOKEN>
+----
+
+== Zoho CRM Links
+
+- Zoho CRM v8 Docs 
+  - Get Records: https://www.zoho.com/crm/developer/docs/api/v8/get-records.html
+  - Search Records: https://www.zoho.com/crm/developer/docs/api/v8/search-records.html
+  - Module properties/fields: https://www.zoho.com/developer/help/api/modules-fields.html#Events
+- Zoho CRM Create Webhooks: https://help.zoho.com/portal/en/kb/crm/automate-business-processes/actions/articles/webhooks-workflow#View_Webhooks_Usage_Graph
+
+== Sample response for an Events search
+
+[source,json]
+----
+{
+  "data": [
+    {
+      "All_day": false,
+      "Owner": {
+        "name": "<YOUR NAME>",
+        "id": "101648000000369331",
+        "email": "<YOUR EMAIL ADDRESS>"
+      },
+      "Check_In_State": null,
+      "$currency_symbol": "$",
+      "$field_states": null,
+      "Latitude": null,
+      "$sharing_permission": "full_access",
+      "Participants": [
+        {
+          "Email": "john-buttbenton@noemail.invalid",
+          "name": "John Butt (Sample)",
+          "id": "101648000000370464",
+          "type": "contact",
+          "subordinates": false,
+          "participant": "101648000000386181"
+        },
+        {
+          "Email": "tollner-morlong@noemail.invalid",
+          "name": "Mitsue Tollner (Sample)",
+          "id": "101648000000419001",
+          "type": "contact",
+          "subordinates": false,
+          "participant": "101648000000386187"
+        }
+      ],
+      "Last_Activity_Time": "2025-11-03T12:37:14+11:00",
+      "$process_flow": false,
+      "Check_In_City": null,
+      "id": "101648000000370437",
+      "Check_In_Comment": null,
+      "Who_Id": null,
+      "Check_In_Status": "PLANNED",
+      "$approval": {
+        "delegate": false,
+        "takeover": false,
+        "approve": false,
+        "reject": false,
+        "resubmit": false
+      },
+      "Venue": "Sydney Tower Eye. 108 Market St Sydney NSW 2000",
+      "ZIP_Code": null,
+      "Created_Time": "2025-10-08T15:27:03+11:00",
+      "$editable": true,
+      "$colour_code": null,
+      "Longitude": null,
+      "Check_In_Time": null,
+      "Recurring_Activity": null,
+      "What_Id": null,
+      "Created_By": {
+        "name": "<YOUR NAME>",
+        "id": "101648000000369221",
+        "email": "<YOUR EMAIL ADDRESS>"
+      },
+      "Meeting_Venue__s": "Client location",
+      "Check_In_Address": null,
+      "Description": null,
+      "Start_DateTime": "2025-10-08T15:00:00+11:00",
+      "$review_process": null,
+      "Event_Title": "New Meeting",
+      "$calendar_booking_event": false,
+      "End_DateTime": "2025-10-08T16:00:00+11:00",
+      "Check_In_By": null,
+      "Modified_By": {
+        "name": "<YOUR NAME>",
+        "id": "101648000000369001",
+        "email": "<YOUR EMAIL ADDRESS>"
+      },
+      "$review": null,
+      "$event_cancelled": false,
+      "$zia_visions": null,
+      "Check_In_Country": null,
+      "Modified_Time": "2025-11-03T12:37:14+11:00",
+      "Meeting_Provider__s": null,
+      "$recurrence_id": null,
+      "Record_Status__s": "Available",
+      "$orchestration": null,
+      "$se_module": null,
+      "Check_In_Sub_Locality": null,
+      "$in_merge": false,
+      "$meeting_details": null,
+      "$u_id": "101648000000370437",
+      "$send_notification": false,
+      "$approval_state": "approved",
+      "$pathfinder": null
+    }
+  ],
+  "info": {
+    "per_page": 200,
+    "count": 1,
+    "sort_by": "id",
+    "page": 1,
+    "sort_order": "desc",
+    "more_records": false
+  }
+}
+----
+
+== Sample response for getting a Contact record
+
+[source,json]
+----
+{
+    "data": [
+        {
+            "Mobile": "555-555-5555",
+            "Phone": "555-555-5555",
+            "id": "101648000000386181"
+        }
+    ]
+}
+----
+
+Need to search on the following fields:
+
+* End_DateTime
+* Event_Title: The time that the event ends
+* Start_DateTime: The time that the event starts
+* Venue: The venue where the event is being held
+* Created_By.name: The person who created the event
+
+Then, on the returned data, retrieve the "Participants" list.
+
+== Issues downloading on mobile hotspot
+
+[source,bash]
+----
+Failed to download mrbenosborne/json-unmarshal from dist: curl error 35 while downloading https://api.github.com/repos/mrbenosborne/json-unmarshal/zipball/57220f788ecee128f99cf92a2d35ed8b3965fb63: TLS connect error: error:0A000126:SSL routines::unexpected eof while reading
+----
+
+[source,bash]
+----
+Failed to download phpdocumentor/reflection-docblock from dist: curl error 35 while downloading https://codeload.github.com/phpDocumentor/ReflectionDocBlock/legacy.zip/069a785b2141f5bcf49f3e353548dc1cce6df556: TLS connect error: error:0A000126:SSL routines::unexpected eof while reading
+    Now trying to download from source
+----
