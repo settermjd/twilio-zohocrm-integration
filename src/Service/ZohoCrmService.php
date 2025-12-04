@@ -12,6 +12,7 @@ use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
 use JSON\Unmarshal;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use Twilio\Rest\Client as TwilioRestClient;
 
 use function json_decode;
@@ -35,6 +36,7 @@ final class ZohoCrmService
         private readonly ClientInterface $httpClient,
         private readonly TwilioRestClient $twilioClient,
         private readonly array $options,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -77,6 +79,8 @@ final class ZohoCrmService
                 ],
             ],
         ];
+
+        $this->logger->debug('Zoho CRM Service Call Data', $requestData);
 
         return $this->httpClient->request(
             'POST',

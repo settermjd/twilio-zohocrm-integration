@@ -88,7 +88,10 @@ $container->set(LoggerInterface::class, function () use ($logger) {
 $container->set(Zoho::class, fn () => $provider);
 $container->set(Client::class, fn () => $client);
 $container->set(TwilioRestClient::class, fn () => $twilioRestClient);
-$container->set(ZohoCrmService::class, fn () => new ZohoCrmService($client, $twilioRestClient, []));
+$container->set(
+    ZohoCrmService::class, 
+    fn () => new ZohoCrmService($client, $twilioRestClient, [], $logger)
+);
 
 $application = new Application(
     $container,
