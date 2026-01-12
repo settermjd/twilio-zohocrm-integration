@@ -15,6 +15,8 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Twilio\Rest\Client as TwilioRestClient;
 
+use function sprintf;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 // Load the required environment variables that the app needs
@@ -82,14 +84,12 @@ $twilioRestClient = new TwilioRestClient(
 
 // Set up the DI container, initialising all of the required services
 $container = new Container();
-$container->set(LoggerInterface::class, function () use ($logger) {
-    return $logger;
-});
+$container->set(LoggerInterface::class, fn () => $logger);
 $container->set(Zoho::class, fn () => $provider);
 $container->set(Client::class, fn () => $client);
 $container->set(TwilioRestClient::class, fn () => $twilioRestClient);
 $container->set(
-    ZohoCrmService::class, 
+    ZohoCrmService::class,
     fn () => new ZohoCrmService($client, $twilioRestClient, [], $logger)
 );
 

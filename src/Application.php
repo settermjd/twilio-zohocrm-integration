@@ -53,13 +53,27 @@ final class Application
 
     public function setupRoutes(): void
     {
-        $this->app->post('/', [$this, 'handleDefaultRoute']);
-        $this->app->post('/call/end', [$this, 'endCall']);
+        // This route is for tutorial 1: ISA Integration: Zoho CRM and SMS
+        $this->app->post('/', [$this, 'handleMeetingCreationAndChange']);
+
+        /**
+         * These routes are for tutorial 2: ISA Integration: Zoho CRM and Voice
+         */
+
+        // Step 1. Receive the inbound call.
         $this->app->post('/call/receive', [$this, 'receiveCall']);
+
+        // Step 2. Record and create a text copy the inbound call
         $this->app->post('/call/record', [$this, 'recordCall']);
+
+        // Step 3. End the call.
+        $this->app->post('/call/end', [$this, 'endCall']);
+
+        // This route is for retrieving the available fields for a module.
+        // It has nothing to do, really, with the app for the purposes of the tutorials.
         $this->app->get('/fields/{module}', [$this, 'getFieldMetadata']);
 
-        // Test for Zoho CRM call logging
+        // This route is purely for testing Zoho CRM call logging
         $this->app->post('/call/test', [$this, 'testCallLogging']);
     }
 
@@ -130,9 +144,9 @@ final class Application
 
         $call = $twilioClient->calls($formData['CallSid'])->fetch();
 
-        $callData                     = new LoggedCall();
-        $callData->callType           = CallType::INBOUND;
-        $callData->callStarted        = $call->startTime;
+        $callData              = new LoggedCall();
+        $callData->callType    = CallType::INBOUND;
+        $callData->callStarted = $call->startTime;
 
         // Instantiate a DateInterval instance based on the call's integer duration
         [$minutes, $seconds]    = explode(':', gmdate('i:s', (int) $call->duration));
@@ -176,9 +190,9 @@ final class Application
             ->getContainer()
             ->get(ZohoCrmService::class);
 
-        $callData                     = new LoggedCall();
-        $callData->callType           = CallType::INBOUND;
-        $callData->callStarted        = new DateTime()->sub(new DateInterval('P4DT2H3M'));
+        $callData              = new LoggedCall();
+        $callData->callType    = CallType::INBOUND;
+        $callData->callStarted = new DateTime()->sub(new DateInterval('P4DT2H3M'));
 
         [$minutes, $seconds]    = explode(':', gmdate('i:s', 85));
         $callData->callDuration = new DateInterval(sprintf(self::DATE_FORMAT, $minutes, $seconds));
@@ -223,9 +237,9 @@ final class Application
     }
 
     /**
-     * This function provides the dispatcher/handler for the default route.
+     * Notify meeting attendees about new meetings and changes to existing ones
      */
-    public function handleDefaultRoute(
+    public function handleMeetingCreationAndChange(
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
